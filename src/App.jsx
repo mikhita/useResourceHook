@@ -152,19 +152,21 @@ const App = () => {
           <Toolbar>
             <IconButton edge="start" color="inherit" aria-label="menu">
             </IconButton>
-            <Button color="inherit">
-              <Link to="/">home</Link>
+            <Button color="inherit" component={Link} to="/">
+              home
             </Button>
-            <Button color="inherit">
-              <Link to="/notes">notes</Link>
+            <Button color="inherit" component={Link} to="/notes">
+              notes
             </Button>
-            <Button color="inherit">
-              <Link to="/users">users</Link>
+            <Button color="inherit" component={Link} to="/users">
+              users
             </Button>  
-            <Button color="inherit">
+            <Button color="inherit" >
               {user
                 ? <em>{user} logged in</em>
-                : <Link to="/login">login</Link>
+                : <Button color="inherit" component={Link} to="/login">
+                login
+              </Button>  
               }
             </Button>                
           </Toolbar>
