@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Table, Form, Button, Alert, Navbar, Nav } from 'react-bootstrap'
+// import { Table, Form, Button, Alert, Navbar, Nav} from 'react-bootstrap'
+import { Container, Paper, TableBody, TableCell, TableContainer, TableRow, TextField, Button, Alert, AppBar, Toolbar, IconButton, Table } from '@mui/material'
 
 import {
   Routes,
@@ -34,23 +35,23 @@ const Note = ({ note }) => {
 const Notes = ({ notes }) => (
   <div>
     <h2>Notes</h2>
-    <Table striped>
-      <tbody>
-        {/* eslint-disable-next-line react/prop-types */}
-        {notes.map(note =>
-          <tr key={note.id}>
-            <td>
-              <Link to={`/notes/${note.id}`}>
-                {note.content}
-              </Link>
-            </td>
-            <td>
-              {note.user}
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </Table>
+    <TableContainer component={Paper}>
+    <Table>
+        <TableBody>
+          {/* eslint-disable-next-line react/prop-types */}
+          {notes.map(note => (
+            <TableRow key={note.id}>
+              <TableCell>
+                <Link to={`/notes/${note.id}`}>{note.content}</Link>
+              </TableCell>
+              <TableCell>
+                {note.user}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   </div>
 )
 
@@ -78,22 +79,19 @@ const Login = (props) => {
   return (
     <div>
       <h2>login</h2>
-      <Form onSubmit={onSubmit}>
-        <Form.Group>
-          <Form.Label>username:</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-          />
-          <Form.Label>password:</Form.Label>
-          <Form.Control
-            type="password"
-          />
-          <Button variant="primary" type="submit">
+      <form onSubmit={onSubmit}>
+        <div style={{paddingBottom:"10px"}}>
+          <TextField label="username" type='username' />
+        </div>
+        <div>
+          <TextField label="password" type='password' />
+        </div>
+        <div>
+          <Button variant="contained" color="primary" type="submit">
             login
           </Button>
-        </Form.Group>
-      </Form>
+        </div>
+      </form>
     </div>
   )
 }
@@ -138,40 +136,39 @@ const App = () => {
     }, 10000)
   }
 
-  const padding = {
-    padding: 5
-  }
+  // const padding = {
+  //   padding: 5
+  // }
 
   return (
-    <div className="container">
+    <Container >
       {(message &&
         <Alert variant="success">
           {message}
         </Alert>
       )}
 
-      <Navbar collapseOnSelect expand="lg" bg="info" variant="dark">
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/">home</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/notes">notes</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/users">users</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+            </IconButton>
+            <Button color="inherit">
+              <Link to="/">home</Link>
+            </Button>
+            <Button color="inherit">
+              <Link to="/notes">notes</Link>
+            </Button>
+            <Button color="inherit">
+              <Link to="/users">users</Link>
+            </Button>  
+            <Button color="inherit">
               {user
                 ? <em>{user} logged in</em>
                 : <Link to="/login">login</Link>
               }
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+            </Button>                
+          </Toolbar>
+        </AppBar>
 
       <Routes>
         <Route path="/notes/:id" element={<Note note={note} />} />
@@ -184,7 +181,7 @@ const App = () => {
         <br />
         <em>Note app, Department of Computer Science 2023</em>
       </div>
-    </div>
+    </Container>
   )
 }
 
